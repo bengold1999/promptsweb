@@ -1,4 +1,5 @@
 import React from 'react'
+import Feed from '@components/Feed.jsx'
 
 const Home = () => {
     return (
@@ -10,7 +11,7 @@ const Home = () => {
             </h1>
             <p className='desc text-center'>Prompts Web is an open-source AI prompting tool for modern world to discover, create and share creative prompts</p>
 
-
+            <Feed />
         </section>
     )
 }
