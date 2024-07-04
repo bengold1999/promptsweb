@@ -1,9 +1,12 @@
-import React from 'react'
+'use client'
 
-const PromotCard = () => {
+const PromotCard = ({ post, handleTagClick }) => {
+  if (!post) return null
+
   return (
-    <div>
-      
+    <div className='promot-card'>
+      {/* Example of rendering post content */}
+      hello
     </div>
   )
 }

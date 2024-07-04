@@ -8,7 +8,6 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
   const { data: session } = useSession()
-  const logUser =true
   const [providers, setProviders] = useState(null)
   const [toggleDropdown, setToggleDropdown] = useState(false)
   useEffect(() => {
@@ -33,7 +32,7 @@ const Nav = () => {
       </Link>
 
       <div className='sm:flex hidden'>
-        {logUser ? (
+        {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
             <Link href='/create-prompt' className='black_btn'>
               Create Post
@@ -59,7 +58,7 @@ const Nav = () => {
         )}
       </div>
       <div className='sm:hidden flex relative'>
-        {logUser ? (<div className='flex'>
+        {session?.user ? (<div className='flex'>
           <Image
             src={'/assets/images/logo.svg'}
             width={37}
