@@ -89,6 +89,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </p>
         </div>
       )}
+      
     </div>
   );
 };
