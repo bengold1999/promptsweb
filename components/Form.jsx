@@ -16,7 +16,21 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
       >
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
+          <span className='font-satoshi font-semibold text-base text-white'>
+            
+           Title Prompt
+          </span>
+          <input
+            value={post.title}
+            onChange={(e) => setPost({ ...post, title: e.target.value })}
+            type='text'
+            placeholder='Title'
+            required
+            className='form_input'
+          />
+        </label>
+        <label>
+          <span className='font-satoshi font-semibold text-base text-white'>
             Your AI Prompt
           </span>
 
@@ -30,7 +44,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         </label>
 
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
+          <span className='font-satoshi font-semibold text-base text-white'>
             Field of Prompt{" "}
             <span className='font-normal'>
               (#product, #webdevelopment, #idea, etc.)
@@ -54,7 +68,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <button
             type='submit'
             disabled={submitting}
-            className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+            className='px-5 py-1.5 text-sm bg-white rounded-full text-black'
           >
             {submitting ? `${type}ing...` : type}
           </button>

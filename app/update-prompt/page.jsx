@@ -37,6 +37,9 @@ const EditPrompt = () => {
                 body: JSON.stringify({
                     prompt: post.prompt,
                     tag: post.tag,
+                    title: post.title,
+                    like: post.like,
+                    dislike: post.dislike
                 }),
             });
 
