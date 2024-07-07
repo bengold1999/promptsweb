@@ -14,13 +14,16 @@ export const GET = async (req,{params}) => {
 }
 
 export const PATCH = async (req, { params }) => {
-    const { prompt, tag } = await req.json();
+    const { prompt, tag ,title  } = await req.json();
     try {
         await connectToDB();
         const existingPrompt = await Prompt.findById(params.id);
         if (!existingPrompt) return new Response("Prompt not found", { status: 404 });
         existingPrompt.prompt = prompt;
         existingPrompt.tag = tag
+        existingPrompt.title = title
+
+        
         await existingPrompt.save();
         return new Response(JSON.stringify(existingPrompt),{status:200})
     } catch (error) {
