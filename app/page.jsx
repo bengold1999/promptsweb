@@ -4,7 +4,7 @@ import Feed from '@components/Feed.jsx'
 const Home = () => {
     return (
         <section className='w-full flex-center flex-col'>
-            <h1 className='head_text'>Discover and share
+            <h1 className='head_text text-center'>Discover and share
                 <br className='max-md:hidden'/>
                 <span className='green_gradient  flex align-middle justify-center'>AI prompts</span>
 
