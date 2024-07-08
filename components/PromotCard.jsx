@@ -11,8 +11,8 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const router = useRouter();
 
   const [copied, setCopied] = useState("");
-  const [likes, setLikes] = useState(post.like);
-  const [dislikes, setDislikes] = useState(post.dislike);
+  const [likes, setLikes] = useState(post.likes.length);
+  const [dislikes, setDislikes] = useState(post.dislikes.length);
 
   const handleProfileClick = () => {
     if (post.creator._id === session?.user.id) return router.push("/profile");
@@ -28,28 +28,29 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
 
   const updateLikeDislike = async (type) => {
     try {
+      console.log(`Updating ${type}...`);
       const response = await fetch(`/api/prompt/${post._id.toString()}`, {
-        method: "PATCHLIKE",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type }),
+        body: JSON.stringify({ userId: session.user.id, type }),
       });
-
+  
+      console.log("Response received:", response);
       if (response.ok) {
         const updatedPost = await response.json();
-        setLikes(updatedPost.like);
-        setDislikes(updatedPost.dislike);
+        setLikes(updatedPost.likes.length);
+        setDislikes(updatedPost.dislikes.length);
+        console.log(`Updated ${type} successfully`);
       } else {
-        console.error('Failed to update likes/dislikes');
+        const errorText = await response.text();
+        console.error('Failed to update likes/dislikes:', errorText);
       }
     } catch (error) {
       console.error('Error updating likes/dislikes:', error);
     }
   };
-
-  const handleLike = () => updateLikeDislike('like');
-  const handleDislike = () => updateLikeDislike('dislike');
 
   return (
     <div className='prompt_card'>
@@ -98,10 +99,10 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
       >
         #{post.tag}
       </p>
-      
+
       <div className='mt-5 flex-center gap-4'>
         <Image
-          onClick={handleLike}
+          onClick={() => updateLikeDislike('like')}
           src="/assets/icons/thumbs-up-solid.svg"
           width={20}
           height={20}
@@ -110,7 +111,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         />
         <span>{likes}</span>
         <Image
-          onClick={handleDislike}
+          onClick={() => updateLikeDislike('dislike')}
           src="/assets/icons/thumbs-down-solid.svg"
           width={20}
           height={20}
@@ -128,12 +129,12 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           >
             Edit
           </p>
-          { <p
+          {<p
             className='font-inter text-sm orange_gradient cursor-pointer'
             onClick={handleDelete}
           >
             Delete
-          </p> }
+          </p>}
         </div>
       )}
     </div>

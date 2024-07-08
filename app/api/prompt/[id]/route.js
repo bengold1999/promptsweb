@@ -17,23 +17,42 @@ export const GET = async (req,{params}) => {
 }
 
 export const PATCH = async (req, { params }) => {
-    const { prompt, tag ,title  } = await req.json();
+    const { userId, type, prompt, tag, title } = await req.json();
     try {
         await connectToDB();
         const existingPrompt = await Prompt.findById(params.id);
-        if (!existingPrompt) return new Response("Prompt not found", { status: 404 });
-        existingPrompt.prompt = prompt;
-        existingPrompt.tag = tag
-        existingPrompt.title = title
 
-        
+        if (!existingPrompt) {
+            return NextResponse.json({ message: "Prompt not found" }, { status: 404 });
+        }
+
+        if (type) {
+            // Handle likes and dislikes
+            if (type === 'like') {
+                if (!existingPrompt.likes.includes(userId)) {
+                    existingPrompt.likes.push(userId);
+                    existingPrompt.dislikes = existingPrompt.dislikes.filter(id => id.toString() !== userId);
+                }
+            } else if (type === 'dislike') {
+                if (!existingPrompt.dislikes.includes(userId)) {
+                    existingPrompt.dislikes.push(userId);
+                    existingPrompt.likes = existingPrompt.likes.filter(id => id.toString() !== userId);
+                }
+            }
+        } else if (prompt || tag || title) {
+            // Handle content update
+            if (prompt) existingPrompt.prompt = prompt;
+            if (tag) existingPrompt.tag = tag;
+            if (title) existingPrompt.title = title;
+        }
+
         await existingPrompt.save();
-        return new Response(JSON.stringify(existingPrompt),{status:200})
+        return NextResponse.json(existingPrompt, { status: 200 });
     } catch (error) {
-        return new Response("Failed to update prompt", { status: 500 });
-
+        console.error("Error updating prompt:", error);
+        return NextResponse.json({ message: "Failed to update prompt" }, { status: 500 });
     }
-}
+};
 
 export const DELETE = async (req, { params }) => {
     try {
@@ -60,26 +79,3 @@ export const DELETE = async (req, { params }) => {
         return NextResponse.json({ message: "Failed to delete prompt" }, { status: 500 });
     }
 }
-
-export const PATCHLIKE = async (req, { params }) => {
-    const { type } = await req.json();
-    try {
-        await connectToDB();
-        const existingPrompt = await Prompt.findById(params.id);
-
-        if (!existingPrompt) {
-            return new Response("Prompt not found", { status: 404 });
-        }
-
-        if (type === 'like') {
-            existingPrompt.like += 1;
-        } else if (type === 'dislike') {
-            existingPrompt.dislike += 1;
-        }
-
-        await existingPrompt.save();
-        return new Response(JSON.stringify(existingPrompt), { status: 200 });
-    } catch (error) {
-        return new Response("Failed to update prompt", { status: 500 });
-    }
-};
