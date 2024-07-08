@@ -25,6 +25,10 @@ const promptSchema = new Schema({
         type: String,
         required: [true, 'Title is required'],
     },
+    which:{
+        type: String,
+        required: [true, 'Which is required'],
+    }
 });
 
 const Prompt = models.Prompt || model('Prompt', promptSchema);

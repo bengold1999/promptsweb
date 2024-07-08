@@ -17,8 +17,8 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
       >
         <label>
           <span className='font-satoshi font-semibold text-base text-white'>
-            
-           Title Prompt
+
+            Title Prompt
           </span>
           <input
             value={post.title}
@@ -55,6 +55,22 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             onChange={(e) => setPost({ ...post, tag: e.target.value })}
             type='text'
             placeholder='#Tag'
+            required
+            className='form_input'
+          />
+        </label>
+        <label>
+          <span className='font-satoshi font-semibold text-base text-white'>
+            To which AI {''}
+            <span className='font-normal'>
+               (ChatGpt , Copilot etc. )
+            </span>
+          </span>
+          <input
+            value={post.which}
+            onChange={(e) => setPost({ ...post, which: e.target.value })}
+            type='text'
+            placeholder='ChatGpt'
             required
             className='form_input'
           />
