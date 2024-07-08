@@ -9,7 +9,7 @@ export const GET = async () => {
         const prompts = await Prompt.find({}).populate("creator");
         return new Response(JSON.stringify(prompts), { status: 200 });
     } catch (error) {
-        console.log(error);
-        
+        console.error('Error fetching prompts:', error);
+        return new Response(JSON.stringify({ error: 'Error fetching prompts' }), { status: 500 });        
     }
 }
