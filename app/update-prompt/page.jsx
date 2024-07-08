@@ -12,7 +12,7 @@ const EditPrompt = () => {
     const promptId = searchParams.get('id')
 
     const [submitting, setIsSubmitting] = useState(false);
-    const [post, setPost] = useState({ prompt: "", tag: "" });
+    const [post, setPost] = useState({ prompt: "", tag: "" ,title: "", like: [], dislike: []});
 
 
     useEffect(() => {
@@ -39,7 +39,8 @@ const EditPrompt = () => {
                     tag: post.tag,
                     title: post.title,
                     like: post.like,
-                    dislike: post.dislike
+                    dislike: post.dislike,
+                    which : post.which
                 }),
             });
 

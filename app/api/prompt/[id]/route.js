@@ -39,11 +39,12 @@ export const PATCH = async (req, { params }) => {
                     existingPrompt.likes = existingPrompt.likes.filter(id => id.toString() !== userId);
                 }
             }
-        } else if (prompt || tag || title) {
+        } else if (prompt || tag || title || which) {
             // Handle content update
             if (prompt) existingPrompt.prompt = prompt;
             if (tag) existingPrompt.tag = tag;
             if (title) existingPrompt.title = title;
+            if (which) existingPrompt.which = which;
         }
 
         await existingPrompt.save();
