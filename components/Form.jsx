@@ -19,7 +19,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <span className='font-satoshi font-semibold text-base text-white'>
 
             Title Prompt
-          </span>
+          
+             
+            </span>
           <input
             value={post.title}
             onChange={(e) => setPost({ ...post, title: e.target.value })}
