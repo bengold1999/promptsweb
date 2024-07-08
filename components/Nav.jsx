@@ -20,13 +20,13 @@ const Nav = () => {
 
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
-      <Link href='/' className='flex gap-2 flex-center'>
+      <Link href='/' className='flex gap-2  items-end  '>
         <Image
           src='/assets/images/logo.svg'
-          width={30}
-          height={30}
+          width={47}
+          height={50}
           alt='prompt logo'
-          className='object-contain'
+          className='object-contain pb-1'
         />
         <p className='logo_text'>Prompts Web</p>
       </Link>
