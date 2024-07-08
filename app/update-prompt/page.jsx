@@ -1,19 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import Form from "@components/Form";
 
-const EditPrompt = () => {
+const EditPromptContent = () => {
     const router = useRouter();
-    //   const { data: session } = useSession();
     const searchParams = useSearchParams();
-    const promptId = searchParams.get('id')
+    const promptId = searchParams.get('id');
 
     const [submitting, setIsSubmitting] = useState(false);
-    const [post, setPost] = useState({ prompt: "", tag: "" ,title: "", like: [], dislike: []});
-
+    const [post, setPost] = useState({ prompt: "", tag: "", title: "", like: [], dislike: [] });
 
     useEffect(() => {
         const getPromptDetails = async () => {
@@ -23,8 +20,7 @@ const EditPrompt = () => {
         }
 
         if (promptId) getPromptDetails();
-    }, [promptId])
-
+    }, [promptId]);
 
     const editPrompt = async (e) => {
         e.preventDefault();
@@ -32,7 +28,7 @@ const EditPrompt = () => {
         if (!promptId) return alert('Prompt ID not found');
 
         try {
-            const response = await fetch(`api/prompt/${promptId}`, {
+            const response = await fetch(`/api/prompt/${promptId}`, {
                 method: "PATCH",
                 body: JSON.stringify({
                     prompt: post.prompt,
@@ -40,7 +36,7 @@ const EditPrompt = () => {
                     title: post.title,
                     like: post.like,
                     dislike: post.dislike,
-                    which : post.which
+                    which: post.which
                 }),
             });
 
@@ -62,6 +58,14 @@ const EditPrompt = () => {
             submitting={submitting}
             handleSubmit={editPrompt}
         />
+    );
+};
+
+const EditPrompt = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <EditPromptContent />
+        </Suspense>
     );
 };
 
