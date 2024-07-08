@@ -28,8 +28,8 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
 
   const updateLikeDislike = async (type) => {
     try {
-      const response = await fetch(`/api/prompt/${post._id}/like.js`, {
-        method: "PATCH",
+      const response = await fetch(`/api/prompt/${post._id.toString()}`, {
+        method: "PATCHLIKE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -128,12 +128,12 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           >
             Edit
           </p>
-          {/* <p
+          { <p
             className='font-inter text-sm orange_gradient cursor-pointer'
             onClick={handleDelete}
           >
             Delete
-          </p> */}
+          </p> }
         </div>
       )}
     </div>
